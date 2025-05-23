@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
 from utils.analytics import compute_ratios
 from utils.forecast import forecast_cashflow
 
@@ -47,7 +46,8 @@ elif menu == "Profil Utang":
 elif menu == "Maturitas Utang":
     st.header("Maturitas Utang")
     if 'maturity_date' in lk_data.columns:
-        st.bar_chart(lk_data.groupby('maturity_date').debt.sum())
+        maturitas_df = lk_data.groupby('maturity_date').debt.sum().reset_index()
+        st.bar_chart(maturitas_df.set_index('maturity_date'))
     else:
         st.warning("Kolom maturity_date belum tersedia dalam data.")
 
